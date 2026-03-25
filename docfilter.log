@@ -1,22 +1,4 @@
-INFO:     Started server process [30776]
+INFO:     Started server process [584]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     192.168.86.67:42412 - "GET / HTTP/1.1" 304 Not Modified
-INFO:     192.168.86.67:42412 - "GET /api/structure HTTP/1.1" 200 OK
-INFO:     192.168.86.67:42418 - "POST /api/generate HTTP/1.1" 200 OK
-INFO:     192.168.86.67:35372 - "POST /api/generate HTTP/1.1" 200 OK
-INFO:     192.168.86.67:34714 - "POST /api/generate HTTP/1.1" 200 OK
-INFO:     192.168.86.67:55700 - "GET /api/template/info HTTP/1.1" 200 OK
-INFO:     192.168.86.67:33474 - "GET /api/structure HTTP/1.1" 200 OK
-INFO:     192.168.86.67:60876 - "GET / HTTP/1.1" 304 Not Modified
-INFO:     192.168.86.67:60876 - "GET /api/structure HTTP/1.1" 200 OK
-INFO:     192.168.86.67:38668 - "POST /api/generate HTTP/1.1" 200 OK
-INFO:     192.168.86.67:51772 - "GET /api/template/info HTTP/1.1" 200 OK
-INFO:     192.168.86.67:51772 - "GET /api/structure HTTP/1.1" 200 OK
-INFO:     192.168.86.67:40976 - "GET /api/template/info HTTP/1.1" 200 OK
-INFO:     192.168.86.67:40976 - "GET /settings HTTP/1.1" 200 OK
-INFO:     192.168.86.67:40976 - "GET /assets/index-DJQsJwdz.js HTTP/1.1" 304 Not Modified
-INFO:     192.168.86.67:40976 - "GET /assets/index-D5axT4YL.css HTTP/1.1" 304 Not Modified
-INFO:     192.168.86.67:40976 - "GET /api/template/info HTTP/1.1" 200 OK
-INFO:     192.168.86.67:40984 - "GET /api/structure HTTP/1.1" 200 OK
