@@ -7,4 +7,4 @@ services:
     volumes:
       - ./backend/data:/opt/docfilter/backend/data
     restart: always
-    user: "1000:1000" # Forza l'esecuzione con lo stesso UID/GID del primo utente Linux (es. Andrea)
+    user: "1000:1000"
