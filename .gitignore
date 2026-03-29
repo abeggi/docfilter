@@ -4,7 +4,6 @@ backend/__pycache__/
 backend/**/__pycache__/
 backend/**/*.pyc
 backend/**/*.pyo
-backend/data/
 *.egg-info/
 .pytest_cache/
 .mypy_cache/

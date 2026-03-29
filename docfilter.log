@@ -67,3 +67,17 @@ INFO:     Started server process [2004]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     192.168.86.67:45162 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:45162 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:45178 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:45178 - "GET /api/structure HTTP/1.1" 404 Not Found
+INFO:     192.168.86.67:45178 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:45178 - "GET /api/structure HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2004]
+INFO:     Started server process [2447]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
