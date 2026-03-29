@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: abeggi/docfilter:latest
     container_name: docfilter-app
     ports:
       - "8000:8000"
