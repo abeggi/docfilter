@@ -27,6 +27,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR $APP_HOME
 
+# Crea un utente non-root (ID 1000 è lo standard per il primo utente Linux)
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -s /bin/bash -m appuser
+
 # Installa le dipendenze Python
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip \
@@ -38,8 +42,12 @@ COPY backend/ ./backend/
 # Copia il frontend già compilato dallo stage precedente
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
-# Cartella per i file caricati dagli utenti
-RUN mkdir -p backend/data
+# Crea la cartella per i file e imposta i permessi
+RUN mkdir -p backend/data && \
+    chown -R appuser:appuser $APP_HOME
+
+# Passa all'utente non-root
+USER appuser
 
 # Espone la porta su cui uvicorn ascolterà
 EXPOSE 8000
