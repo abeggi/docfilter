@@ -1,0 +1,31 @@
+[Unit]
+Description=DocFilter - FastAPI Application
+After=network.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+WorkingDirectory=/opt/docfilter/backend
+Environment="PATH=/opt/docfilter/backend/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+PIDFile=/opt/docfilter/docfilter.pid
+
+# Comando per avviare l'applicazione
+ExecStart=/opt/docfilter/backend/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --log-level info
+
+# Comando per fermare l'applicazione (usa il PID file)
+ExecStop=/bin/kill -TERM $MAINPID
+
+# Restart automatico in caso di crash
+Restart=on-failure
+RestartSec=5s
+
+# Limiti di sicurezza
+LimitNOFILE=65536
+
+# Logging
+StandardOutput=append:/opt/docfilter/docfilter.log
+StandardError=append:/opt/docfilter/docfilter.log
+
+[Install]
+WantedBy=multi-user.target

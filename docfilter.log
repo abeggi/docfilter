@@ -23,3 +23,23 @@ INFO:     192.168.86.67:48256 - "GET / HTTP/1.1" 304 Not Modified
 INFO:     192.168.86.67:48256 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 304 Not Modified
 INFO:     192.168.86.67:48264 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 304 Not Modified
 INFO:     192.168.86.67:48264 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [551]
+INFO:     Started server process [113]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     192.168.86.67:60434 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:60434 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:60450 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:60450 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [113]
+INFO:     Started server process [931]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
