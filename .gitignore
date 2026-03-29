@@ -15,7 +15,7 @@ frontend/dist/
 # === Logs & Runtime ===
 *.log
 *.pid
-
+docfilter.log
 # === Environment & Secrets ===
 .env
 .env.*
