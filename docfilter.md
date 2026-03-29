@@ -263,3 +263,12 @@ python-multipart
 - **CRITICO — sectPr annidato nei paragrafi**: In Word il `w:sectPr` che contiene intestazioni, piè di pagina e margini NON è sempre un figlio diretto di `w:body`. Molto spesso è annidato all'interno dell'**ultimo `<w:p>`** del documento. Se quel paragrafo viene rimosso perché fuori dalla selezione, si perde tutto il layout. La soluzione è: **prima** di rimuovere qualsiasi elemento, cercare `w:sectPr` nested con `element.find(qn('w:sectPr'))` e, se trovato, spostarlo come figlio diretto del body con `body.append(nested_sect)`. Solo dopo procedere alle rimozioni.
 - Per forzare la rigenerazione flessibile e nativa del Sommario (TOC) ereditato dall'originale, genera proceduralmente un nodo `OxmlElement('w:updateFields')` e integralO in `doc.settings.element`.
 - Le tabelle in python-docx non sono paragrafi — itera `doc.element.body` invece di `doc.paragraphs` se vuoi preservare anche le tabelle nell'ordine corretto. Valuta se è necessario in base al contenuto del template.
+
+---
+
+## Ultime Modifiche (Changelog)
+
+- **UI & Branding**: Inserito il logo aziendale di Var Group (con sfondo profilato) nella barra di navigazione in alto a sinistra per sostituire l'icona generica, e impostata la favicon ufficiale nel \`index.html\`.
+- **Git & Repository**: Corretto e centralizzato il \`.gitignore\` alla radice del progetto, impostando un filtro restrittivo globale per i \`*.docx\` così da impedire che i template aziendali vengano pushati inavvertitamente su GitHub.
+- **Containerizzazione**: Aggiunto supporto Docker (\`Dockerfile\`) tramite build multi-stage. Permette di costruire la SPA in React e servirla direttamente dal backend FastAPI in un unico container standalone.
+- **Core Word Processing**: Implementato un fix sofisticato al builder XML che garantisce il recupero dei layout di sezione (\`w:sectPr\`) annidati, risolvendo in modo definitivo uno storico bug in cui la rimozione dell'ultimo paragrafo causava la perdita di intestazioni (header) e piè di pagina (footer) dal file generato.

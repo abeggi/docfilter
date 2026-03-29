@@ -3,3 +3,23 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 INFO:     192.168.86.67:36716 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:37614 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:57108 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.86.67:57108 - "GET /assets/index-BSkBLHJf.css HTTP/1.1" 200 OK
+INFO:     192.168.86.67:57124 - "GET /assets/index-Fht91TSP.js HTTP/1.1" 200 OK
+INFO:     192.168.86.67:57124 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:33438 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.86.67:33438 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 200 OK
+INFO:     192.168.86.67:33454 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 200 OK
+INFO:     192.168.86.67:33438 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:41668 - "GET /api/template/info HTTP/1.1" 200 OK
+INFO:     192.168.86.67:41668 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:32932 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:32932 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:32938 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:32938 - "GET /api/structure HTTP/1.1" 200 OK
+INFO:     192.168.86.67:32938 - "POST /api/generate HTTP/1.1" 200 OK
+INFO:     192.168.86.67:48256 - "GET / HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:48256 - "GET /assets/index-CXcs_pML.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:48264 - "GET /assets/index-C8MVoZMK.js HTTP/1.1" 304 Not Modified
+INFO:     192.168.86.67:48264 - "GET /api/structure HTTP/1.1" 200 OK
