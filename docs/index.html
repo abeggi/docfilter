@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DocFilter – Filtra documenti Word per capitoli</title>
+  <meta name="description" content="DocFilter è un'applicazione web per filtrare documenti .docx selezionando capitoli specifici, preservando formattazione, stili e sommario."/>
+  <meta property="og:title" content="DocFilter – Filtra documenti Word per capitoli"/>
+  <meta property="og:description" content="Seleziona i capitoli che ti servono da un template Word complesso e genera un documento pulito, mantenendo tutta la formattazione originale."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://abeggi.github.io/docfilter/"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📑%3C/text%3E%3C/svg%3E"/>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --radius: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    .logo { font-size: 3rem; margin-bottom: 16px; display: block; }
+    h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 12px; }
+    .subtitle { font-size: 1.25rem; opacity: 0.95; max-width: 700px; margin: 0 auto 24px; }
+    .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.1s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-primary { background: white; color: var(--primary); }
+    .btn-outline { background: transparent; border: 2px solid white; color: white; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+    
+    /* Sections */
+    section { padding: 56px 0; }
+    .section-title {
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 40px;
+    }
+    
+    /* Features Grid */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-icon { font-size: 1.75rem; margin-bottom: 12px; }
+    .feature-card h3 { margin-bottom: 8px; font-size: 1.125rem; }
+    .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+    
+    /* Tech Stack */
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .tech-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* Installation */
+    .install-steps { counter-reset: step; }
+    .install-step {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      position: relative;
+      padding-left: 64px;
+      box-shadow: var(--shadow);
+    }
+    .install-step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .install-step h3 { margin-bottom: 12px; }
+    code {
+      background: rgba(37, 99, 235, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    
+    /* Responsive */
+    @media (max-width: 640px) {
+      h1 { font-size: 2rem; }
+      .subtitle { font-size: 1.1rem; }
+      section { padding: 40px 0; }
+      .install-step { padding-left: 56px; }
+      .install-step::before { width: 28px; height: 28px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <header>
+    <div class="container">
+      <span class="logo">📑</span>
+      <h1>DocFilter</h1>
+      <p class="subtitle">Filtra documenti Microsoft Word (.docx) selezionando solo i capitoli che ti servono, mantenendo intatta formattazione, stili e sommario.</p>
+      
+      <div class="badges">
+        <span class="badge">🐍 Python 3.10+</span>
+        <span class="badge">⚛️ React + Vite</span>
+        <span class="badge">🚀 FastAPI</span>
+        <span class="badge">🐳 Docker-ready</span>
+      </div>
+      
+      <div class="cta-buttons">
+        <a href="https://github.com/abeggi/docfilter" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+        <a href="#install" class="btn btn-primary">Installa Ora</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">✨ Caratteristiche</h2>
+      <p class="section-subtitle">Tutto ciò di cui hai bisogno per gestire documenti Word complessi in modo intelligente.</p>
+      
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🌳</div>
+          <h3>Visualizzazione ad Albero</h3>
+          <p>Naviga la struttura gerarchica del documento con un'interfaccia interattiva per identificare rapidamente capitoli e sezioni.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Filtraggio Selettivo</h3>
+          <p>Seleziona esattamente quali sezioni includere nel documento finale, eliminando il superfluo in pochi click.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Layout Intatto</h3>
+          <p>Preserva stili, margini, header/footer, immagini e formattazione originale del template Word.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Sommario Auto-aggiornato</h3>
+          <p>Il Table of Contents viene rigenerato automaticamente per riflettere la nuova struttura del documento filtrato.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Performance</h3>
+          <p>Backend FastAPI ottimizzato per elaborare documenti complessi in modo rapido ed efficiente.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Privacy-First</h3>
+          <p>Esegui DocFilter in locale o nel tuo ambiente: i tuoi documenti non lasciano mai il tuo controllo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section style="background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-title">🛠️ Stack Tecnologico</h2>
+      <p class="section-subtitle">Costruito con tecnologie moderne per affidabilità e manutenibilità.</p>
+      
+      <div class="tech-grid">
+        <span class="tech-item">🐍 Python 3.10+</span>
+        <span class="tech-item">⚡ FastAPI</span>
+        <span class="tech-item">📄 python-docx</span>
+        <span class="tech-item">⚛️ React</span>
+        <span class="tech-item">🔥 Vite</span>
+        <span class="tech-item">🐳 Docker</span>
+        <span class="tech-item">🔧 systemd</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Installation -->
+  <section id="install">
+    <div class="container">
+      <h2 class="section-title">🚀 Installazione Rapida</h2>
+      <p class="section-subtitle">Segui questi passaggi per avviare DocFilter in pochi minuti.</p>
+      
+      <div class="install-steps">
+        <div class="install-step">
+          <h3>Clona il repository</h3>
+          <pre>git clone https://github.com/abeggi/docfilter.git
+cd docfilter</pre>
+        </div>
+        
+        <div class="install-step">
+          <h3>Configura il backend</h3>
+          <pre>cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+mkdir -p data
+deactivate</pre>
+        </div>
+        
+        <div class="install-step">
+          <h3>Build del frontend</h3>
+          <pre>cd ../frontend
+npm install
+npm run build</pre>
+        </div>
+        
+        <div class="install-step">
+          <h3>Avvia l'applicazione</h3>
+          <pre>chmod +x docfilter.sh
+./docfilter.sh start</pre>
+          <p style="margin-top: 12px; color: var(--text-muted);">
+            L'app sarà disponibile su <code>http://localhost:8000</code>
+          </p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="https://github.com/abeggi/docfilter/blob/main/INSTALL.md" 
+           class="btn btn-outline" 
+           style="background: var(--card-bg); color: var(--primary); border-color: var(--primary);"
+           target="_blank" rel="noopener">
+          📖 Guida Completa all'Installazione
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Docker Section -->
+  <section style="background: var(--card-bg); border-top: 1px solid var(--border);">
+    <div class="container" style="text-align: center;">
+      <h2 class="section-title">🐳 Deployment con Docker</h2>
+      <p class="section-subtitle" style="margin-bottom: 24px;">Preferisci Docker? Avvia DocFilter con un solo comando.</p>
+      
+      <pre style="max-width: 600px; margin: 0 auto 24px; text-align: left;">docker-compose up -d</pre>
+      
+      <p style="color: var(--text-muted); margin-bottom: 24px;">
+        Il file <code>docker-compose.yml</code> è già configurato per un deployment production-ready con utente non-root.
+      </p>
+      
+      <a href="https://github.com/abeggi/docfilter/blob/main/docker-compose.yml" 
+         class="btn btn-outline"
+         style="background: var(--bg); color: var(--primary); border-color: var(--primary);"
+         target="_blank" rel="noopener">
+        Vedi docker-compose.yml
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        Realizzato con ❤️ da <a href="https://github.com/abeggi" target="_blank" rel="noopener">Andrea Beggi</a>
+      </p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/abeggi/docfilter" target="_blank" rel="noopener">GitHub</a> • 
+        <a href="https://github.com/abeggi/docfilter/blob/main/INSTALL.md" target="_blank" rel="noopener">Documentazione</a> • 
+        <a href="https://github.com/abeggi/docfilter/issues" target="_blank" rel="noopener">Segnala un problema</a>
+      </p>
+      <p style="margin-top: 16px; font-size: 0.875rem;">
+        Licenza: MIT • DocFilter è un progetto open-source
+      </p>
+    </div>
+  </footer>
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DocFilter",
+    "description": "Applicazione web per filtrare documenti Microsoft Word (.docx) selezionando capitoli specifici, preservando formattazione e sommario.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Linux, macOS, Windows (via Docker)",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "codeRepository": "https://github.com/abeggi/docfilter",
+    "license": "https://opensource.org/licenses/MIT",
+    "programmingLanguage": ["Python", "JavaScript"],
+    "runtimePlatform": ["FastAPI", "React", "Vite"]
+  }
+  </script>
+</body>
+</html>
